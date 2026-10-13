@@ -1,0 +1,27 @@
+name: Build-Check
+
+# Prüft, ob die committete index.html zu src/ passt.
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      # Version fest, damit die Minifizierung Byte für Byte reproduzierbar ist
+      - run: npm install -g esbuild@0.28.2
+      - run: python3 build.py
+      - name: index.html mit src/ vergleichen
+        run: |
+          if ! git diff --exit-code --stat index.html; then
+            echo "::error file=index.html::index.html passt nicht zu src/. Bitte 'python3 build.py' (esbuild 0.28.2) ausführen und committen."
+            exit 1
+          fi

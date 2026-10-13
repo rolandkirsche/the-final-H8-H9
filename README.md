@@ -77,12 +77,14 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 | `build.py` | baut `index.html`; `python3 build.py --dev` lässt den Code lesbar |
 
 ```sh
-python3 build.py        # minifiziert, wenn esbuild vorhanden ist (npm i -g esbuild), sonst unminifiziert
+python3 build.py        # minifiziert, wenn esbuild vorhanden ist (npm i -g esbuild@0.28.2), sonst unminifiziert
 python3 build.py --dev  # lesbare Variante zum Debuggen
 ```
 
 Die fertige Datei braucht keinen Server: Doppelklick (`file://`) genügt, ebenso jeder statische Webhost (z. B. GitHub Pages).
-Vor dem Commit bitte `python3 build.py` laufen lassen, damit `index.html` zu `src/` passt.
+Vor dem Commit bitte `python3 build.py` mit esbuild 0.28.2 laufen lassen, damit `index.html` zu `src/` passt.
+Eine GitHub Action (`.github/workflows/build-check.yml`) baut bei jedem Push und Pull Request neu und schlägt fehl,
+wenn die committete `index.html` davon abweicht.
 
 ## Herkunft
 

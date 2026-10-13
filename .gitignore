@@ -1,0 +1,13 @@
+# macOS
+.DS_Store
+
+# Editoren
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+
+# Node (falls esbuild lokal installiert wird)
+node_modules/

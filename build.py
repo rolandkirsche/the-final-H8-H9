@@ -12,18 +12,20 @@ import base64, glob, os, re, shutil, subprocess, sys, tempfile
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 dev = "--dev" in sys.argv
+unminified = []  # Loader, bei denen esbuild nicht lief
 
 def read(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
 
 def esbuild(code, loader):
+    if dev: return code
     exe = shutil.which("esbuild")
     cmd = [exe] if exe else (["npx", "--no-install", "esbuild"] if shutil.which("npx") else None)
-    if not cmd or dev: return code
     try:
         r = subprocess.run(cmd + ["--minify", "--loader=" + loader, "--target=safari14,chrome90,firefox90"],
                            input=code, capture_output=True, text=True, timeout=60)
         if r.returncode == 0 and r.stdout.strip(): return r.stdout
-    except Exception: pass
+    except Exception: pass  # auch cmd is None landet hier
+    unminified.append(loader)
     print("Hinweis: esbuild nicht verfügbar, %s bleibt unminifiziert" % loader, file=sys.stderr)
     return code
 
@@ -38,4 +40,5 @@ html = html.replace("/*@css*/", css.strip())
 html = html.replace("/*@js*/", js.strip().replace("</script", "<\\/script"))
 if not dev: html = re.sub(r"<!--(?!\[).*?-->", "", html, flags=re.S)
 open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(html)
-print("index.html: %d Bytes (%s)" % (len(html.encode()), "dev" if dev else "minifiziert"))
+mode = "dev" if dev else "minifiziert" if not unminified else "unminifiziert" if len(unminified) == 2 else "%s unminifiziert" % unminified[0]
+print("index.html: %d Bytes (%s)" % (len(html.encode()), mode))

@@ -10,6 +10,8 @@ der H8 (Intel 8080A, 64 KB RAM, originales PAM-8-ROM) und bootet automatisch
 *Extended BASIC auf dem H9 (Safari auf dem Mac): ein kleines Programm hat den Schirm mit „H8 COMPUTER“ gefüllt,
 darunter die Meldung `END AT LINE 65535` und der `*`-Prompt.*
 
+**Live ausprobieren:** [rolandkirsche.github.io/the-final-H8-H9](https://rolandkirsche.github.io/the-final-H8-H9/)
+
 Alles steckt in einer einzigen Datei: `index.html` (Foto, ROM und BASIC-Band sind eingebettet).
 Einfach im Browser öffnen, es braucht keinen Server.
 

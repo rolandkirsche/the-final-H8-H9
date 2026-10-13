@@ -30,6 +30,7 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 | Ende | EOL (ab Cursor bis Zeilenende löschen) |
 | Bild runter | PAGE (ab Cursor bis Bildschirmende löschen) |
 | Entf | ERASE (ganzen Schirm löschen) |
+| Klick auf die RESET-Taste im Foto | startet den Emulator neu: H8 zurücksetzen, RAM löschen, Extended BASIC neu booten (ohne Seite neu zu laden) |
 
 ## Adress-Parameter
 

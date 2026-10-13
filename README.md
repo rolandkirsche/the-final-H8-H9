@@ -34,7 +34,34 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 | Bild runter | PAGE (ab Cursor bis Bildschirmende löschen) |
 | Entf | ERASE (ganzen Schirm löschen) |
 | F2 | tippt das BASIC-Spiel „Acey Ducey“ (Creative Computing, 1978) automatisch ein, dauert rund eine halbe Minute; danach `RU` + Enter |
+| F3 | löscht das Programm im Speicher und tippt „Super Star Trek“ (Creative Computing, 1978) im Schnellmodus ein, dauert wenige Sekunden; danach `RU` + Enter |
 | Klick auf die RESET-Taste im Foto | startet den Emulator neu: H8 zurücksetzen, RAM löschen, Extended BASIC neu booten (ohne Seite neu zu laden) |
+
+## Star Trek (F3)
+
+„Super Star Trek“ aus *BASIC Computer Games* (1978), angepasst an Extended Benton Harbor BASIC. Befehle
+werden als Zahlen eingegeben, `0` zeigt die Liste:
+
+| Zahl | Befehl |
+| --- | --- |
+| 1 | NAV: Kurs (1–9) und Warp-Faktor setzen |
+| 2 | SRS: Kurzstreckenscan |
+| 3 | LRS: Langstreckenscan |
+| 4 | PHA: Phaser abfeuern |
+| 5 | TOR: Photonentorpedo abfeuern |
+| 6 | SHE: Schilde aufladen oder senken |
+| 7 | DAM: Schadensbericht |
+| 8 | COM: Bordcomputer (0–5) |
+| 9 | XXX: Kommando niederlegen |
+
+Abweichungen vom Original, alle wegen Eigenheiten dieses BASIC (Einzelheiten in `src/js/19-star-trek.js`):
+
+- Zahlen statt der Drei-Buchstaben-Befehle, ebenso 1/0 statt Y/N: Text-`INPUT` verlangt hier Anführungszeichen.
+- `x*x` statt `x^2`: `^` bricht bei negativer Basis mit `OVRFLO` ab.
+- Galaxiekarte und Schadensbericht ohne Leerzeilen, damit sie auf den 12-Zeilen-Schirm passen.
+
+Im Schnellmodus läuft die H8-CPU beim Eintippen ohne Echtzeitbremse weiter. Die Firmware verarbeitet trotzdem jedes
+Zeichen selbst, einschließlich der automatischen Ergänzung von Schlüsselwörtern.
 
 ## Adress-Parameter
 
@@ -72,7 +99,7 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 | --- | --- |
 | `src/index.html` | HTML-Gerüst mit Meta-Tags, Favicon und den Platzhaltern für CSS, JS und Foto |
 | `src/style.css` | Layout, H9-Röhre, H8-Oberfläche für `?debug` |
-| `src/js/*.js` | Skript in 18 Modulen, in Dateinamen-Reihenfolge zusammengesetzt (CPU, ROM-Daten, I/O-Ports, H9-Terminal, Kassette, BASIC, Acey Ducey, …) |
+| `src/js/*.js` | Skript in 19 Modulen, in Dateinamen-Reihenfolge zusammengesetzt (CPU, ROM-Daten, I/O-Ports, H9-Terminal, Kassette, BASIC, Acey Ducey, Star Trek, …) |
 | `assets/h9.webp` | Foto des H9 (WebP, wird als `data:`-URI eingebettet) |
 | `build.py` | baut `index.html`; `python3 build.py --dev` lässt den Code lesbar |
 
@@ -88,6 +115,8 @@ wenn die committete `index.html` davon abweicht.
 
 ## Herkunft
 
+- Super Star Trek: Bob Leedom (1974) nach Mike Mayfield, Fassung aus *BASIC Computer Games* (Creative Computing, 1978),
+  Quelltext über [coding-horror/basic-computer-games](https://github.com/coding-horror/basic-computer-games).
 - ROM und Bandabbilder: SEBHC-Archiv ([github.com/sebhc/sebhc](https://github.com/sebhc/sebhc)), Heath/Wintek-Software.
   Die Rechte daran liegen bei den ursprünglichen Rechteinhabern.
 - Foto des H9: vom Autor bereitgestellt.

@@ -23,23 +23,35 @@ function bootROM(){
   rom.cpu = c;
   romRunLoop();
 }
+// Ein CPU-Schritt samt Host-Eingabe und Interrupts. false: CPU steht ohne Interrupts (HLT bei DI).
+function romStep(c){
+  if(rom.rxHostQueue.length && !rom.usart.rxReady) usartReceive(rom.rxHostQueue.shift());
+  if(c.halted){
+    if(c.iff && rom.pendingRxInterrupt){ rom.pendingRxInterrupt=false; c.interrupt(0x18); }
+    else if(c.iff){ c.interrupt(0x08); } else return false;
+  }
+  c.step();
+  rom.stepCounter++;
+  if(c.iff && (rom.stepCounter % INTERRUPT_PERIOD)===0){ c.interrupt(0x08); }
+  else if(c.iff && rom.pendingRxInterrupt){ rom.pendingRxInterrupt=false; c.interrupt(0x18); }
+  return true;
+}
+// Lässt die CPU synchron n Schritte laufen, ohne auf den nächsten Frame zu warten
+// (schnelles Eintippen langer Programme, siehe typeBasicLine).
+function romPump(n){
+  const c = rom.cpu;
+  if(!c) return;
+  for(let i=0;i<n;i++) if(!romStep(c)) break;
+}
 function romRunLoop(){
   function frame(){
     if(!rom.cpu){ rom.runHandle=null; return; }
     const c = rom.cpu;
     let iffSeen = false, userSeen = false;
     for(let i=0;i<STEPS_PER_FRAME;i++){
-      if(rom.rxHostQueue.length && !rom.usart.rxReady) usartReceive(rom.rxHostQueue.shift());
-      if(c.halted){
-        if(c.iff && rom.pendingRxInterrupt){ rom.pendingRxInterrupt=false; c.interrupt(0x18); }
-        else if(c.iff){ c.interrupt(0x08); } else break;
-      }
-      c.step();
+      if(!romStep(c)) break;
       if(c.iff) iffSeen = true;
       if(c.pc>=1024) userSeen = true;
-      rom.stepCounter++;
-      if(c.iff && (rom.stepCounter % INTERRUPT_PERIOD)===0){ c.interrupt(0x08); }
-      else if(c.iff && rom.pendingRxInterrupt){ rom.pendingRxInterrupt=false; c.interrupt(0x18); }
     }
     rom.ionSeen = iffSeen;
     rom.userSeen = userSeen;

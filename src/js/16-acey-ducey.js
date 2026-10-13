@@ -1,58 +1,63 @@
 /* ============================================================
-   Acey Ducey (Creative Computing / BASIC Computer Games, 1978) —
-   tippt den Original-Quelltext in die laufende Benton-Harbor-BASIC-
-   Sitzung, Zeichen für Zeichen über dieselbe Host-Empfangswarteschlange
-   wie eine echte Tastatureingabe (queueHostByte/usartReceive). Dabei
-   ergänzt PAM-8/BASIC beim Tippen Schlüsselwörter automatisch zur
-   kürzesten eindeutigen Abkürzung (siehe Bedienungshilfe) — typeBasicLine
+   BASIC-Programme eintippen (F2 Acey Ducey, F3 Star Trek) — Zeichen für
+   Zeichen über dieselbe Host-Empfangswarteschlange wie eine echte
+   Tastatureingabe (queueHostByte/usartReceive). Dabei ergänzt BASIC beim
+   Tippen Schlüsselwörter automatisch zur kürzesten eindeutigen Abkürzung
+   (siehe Bedienungshilfe), bei Funktionen samt "$(" bzw. "(" — typeBasicLine
    erkennt das am tatsächlichen Bildschirminhalt und überspringt die
    dadurch bereits ausgefüllten Quelltextzeichen, statt sie doppelt zu
-   tippen. Gegen die echte ROM/BASIC-Firmware verifiziert (0 Abweichungen
-   bei allen 100 Programmzeilen, RUN funktioniert fehlerfrei).
+   tippen. Nach jeder Zeile wartet es auf den *-Prompt: Solange BASIC die
+   Zeile noch abspeichert, gingen weitere Zeichen sonst verloren.
+   fast: Die CPU läuft synchron weiter, statt pro Zeichen auf den nächsten
+   Frame zu warten — gleiche Firmware, gleiche Zeichen, nur ohne
+   Echtzeitbremse (für lange Programme wie Star Trek).
    ============================================================ */
-async function typeBasicLine(line){
+const FAST_STEPS_PER_MS = STEPS_PER_FRAME / 16;
+const FAST_SETTLE_STEPS = 2000; // Nachlauf nach dem Echo für die Ergänzung; gemessen reichen 300
+async function basicWait(fast, done, limitMs){
+  if(fast){ for(let n=0; !done() && n<limitMs*FAST_STEPS_PER_MS; n+=500) romPump(500); return; }
+  for(let t=0; !done() && t<limitMs; t+=5) await delay(5);
+}
+const hostQueueEmpty = ()=>rom.rxHostQueue.length===0;
+const basicPromptShown = ()=>term.col===1 && term.buf[term.row][0]==='*';
+async function typeBasicLine(line, fast=false, waitFor=basicPromptShown){
   const startRow = term.row, startCol = term.col;
   let srcPos = 0, screenOffset = 0;
   while(srcPos < line.length){
-    const ch = line[srcPos];
-    queueHostByte(ch.charCodeAt(0));
-    let waited = 0;
-    while(rom.rxHostQueue.length > 0 && waited < 2000){
-      await delay(5);
-      waited += 5;
-    }
+    const received = term.received;
+    queueHostByte(line.charCodeAt(srcPos));
+    await basicWait(fast, hostQueueEmpty, 2000);
+    if(fast){ await basicWait(true, ()=>term.received!==received, 20); romPump(FAST_SETTLE_STEPS); }
     srcPos++;
     if(term.row !== startRow) break; // unerwarteter Zeilenumbruch — Notbremse
     const visible = term.buf[startRow].slice(startCol, term.col).join('');
     const expectedLen = srcPos + screenOffset;
     if(visible.length > expectedLen){
-      const newExtra = visible.slice(-(visible.length - expectedLen));
-      const m = newExtra.match(/^([A-Za-z]*)(.?)$/);
-      if(m){
-        const extraLetters = m[1], terminator = m[2];
-        const upcoming = line.slice(srcPos, srcPos + extraLetters.length);
-        if(upcoming.toUpperCase() === extraLetters.toUpperCase()){
-          srcPos += extraLetters.length;
-          if(terminator){
-            if(line[srcPos] === terminator) srcPos += 1;
-            else screenOffset += 1;
-          }
-        } else {
-          screenOffset = visible.length - srcPos; // Notfall-Resync
-        }
-      } else {
-        screenOffset = visible.length - srcPos;
-      }
+      // BASIC hat Zeichen ergänzt: so viele überspringen, wie mit dem Quelltext übereinstimmen
+      const extra = visible.slice(expectedLen);
+      let k = 0;
+      while(k < extra.length && srcPos + k < line.length &&
+            extra[k].toUpperCase() === line[srcPos + k].toUpperCase()) k++;
+      srcPos += k;
+      screenOffset += extra.length - k;
     }
   }
   queueHostByte(13);
-  let waited = 0;
-  while(rom.rxHostQueue.length > 0 && waited < 2000){
-    await delay(5);
-    waited += 5;
-  }
-  await delay(30);
+  await basicWait(fast, hostQueueEmpty, 2000);
+  await basicWait(fast, waitFor, 3000);
+  if(fast) await delay(0); // Bildschirm und Frames zwischen den Zeilen zum Zug kommen lassen
 }
+// Löscht das Programm im Speicher (SCRATCH, Rückfrage SURE? mit Y bestätigen).
+async function basicScratch(fast){
+  await typeBasicLine('SCRATCH', fast, ()=>term.buf[term.row].join('').startsWith('SURE?'));
+  queueHostByte('Y'.charCodeAt(0));
+  await basicWait(fast, hostQueueEmpty, 2000);
+  await basicWait(fast, basicPromptShown, 3000);
+}
+
+/* Acey Ducey (Creative Computing / BASIC Computer Games, 1978), Original-
+   Quelltext. Gegen die echte ROM/BASIC-Firmware verifiziert (0 Abweichungen
+   bei allen 100 Programmzeilen, RUN funktioniert fehlerfrei). */
 const ACEYDUCEY_LINES = [
 `10 PRINT TAB(26);"ACEY DUCEY CARD GAME"`,
 `20 PRINT TAB(15);"CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY"`,

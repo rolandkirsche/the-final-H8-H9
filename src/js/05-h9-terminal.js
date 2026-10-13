@@ -23,9 +23,10 @@ const h9Phosphor=getComputedStyle(document.getElementById("h9stage")).getPropert
 if(H9_ROWS===24){ const st=document.getElementById("h9stage").style; st.setProperty("--scr-top","11.2%"); }
 
 const term={
-  COLS:80, ROWS:H9_ROWS, row:0, col:0,
+  COLS:80, ROWS:H9_ROWS, row:0, col:0, received:0, // received: Zeichen vom Host (Echo-Erkennung beim Eintippen)
   buf:Array.from({length:H9_ROWS},()=>Array(80).fill(" ")),
   put(ch){
+    this.received++;
     if(ch===0x0D){this.col=0;}
     else if(ch===0x0A){this.newline();}
     else if(ch===0x07){beep(1400,.08);}
@@ -100,6 +101,11 @@ function h9Key(ev){
   if(ev.key==="F2"){   // Acey Ducey in die laufende BASIC-Sitzung tippen
     ev.preventDefault();
     if(!romTyping){ romTyping=true; (async()=>{ try{ for(const l of ACEYDUCEY_LINES) await typeBasicLine(l); } finally { romTyping=false; } })(); }
+    return;
+  }
+  if(ev.key==="F3"){   // Speicher löschen und Star Trek im Schnellmodus eintippen
+    ev.preventDefault();
+    if(!romTyping){ romTyping=true; (async()=>{ try{ await basicScratch(true); for(const l of STARTREK_LINES) await typeBasicLine(l,true); } finally { romTyping=false; } })(); }
     return;
   }
   let code=null;

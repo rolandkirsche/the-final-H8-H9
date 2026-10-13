@@ -62,6 +62,26 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 - Der Emulatorkern stammt aus
   [rolandkirsche/h8-h9-emulator](https://github.com/rolandkirsche/h8-h9-emulator).
 
+## Aufbau des Repos und Build
+
+`index.html` ist die fertige, minifizierte Einzeldatei (rund 220 KB, gzip rund 140 KB). Sie wird aus den Quellen gebaut:
+
+| Pfad | Inhalt |
+| --- | --- |
+| `src/index.html` | HTML-Gerüst mit Meta-Tags, Favicon und den Platzhaltern für CSS, JS und Foto |
+| `src/style.css` | Layout, H9-Röhre, H8-Oberfläche für `?debug` |
+| `src/js/*.js` | Skript in 18 Modulen, in Dateinamen-Reihenfolge zusammengesetzt (CPU, ROM-Daten, I/O-Ports, H9-Terminal, Kassette, BASIC, Acey Ducey, …) |
+| `assets/h9.webp` | Foto des H9 (WebP, wird als `data:`-URI eingebettet) |
+| `build.py` | baut `index.html`; `python3 build.py --dev` lässt den Code lesbar |
+
+```sh
+python3 build.py        # minifiziert, wenn esbuild vorhanden ist (npm i -g esbuild), sonst unminifiziert
+python3 build.py --dev  # lesbare Variante zum Debuggen
+```
+
+Die fertige Datei braucht keinen Server: Doppelklick (`file://`) genügt, ebenso jeder statische Webhost (z. B. GitHub Pages).
+Vor dem Commit bitte `python3 build.py` laufen lassen, damit `index.html` zu `src/` passt.
+
 ## Herkunft
 
 - ROM und Bandabbilder: SEBHC-Archiv ([github.com/sebhc/sebhc](https://github.com/sebhc/sebhc)), Heath/Wintek-Software.

@@ -923,6 +923,11 @@ function h9Key(ev){
     ArrowRight:()=>term.cursorRight(),Home:()=>term.home(),End:()=>term.eraseToEOL(),
     PageDown:()=>term.eraseToEOP(),Delete:()=>term.eraseScreen()};
   if(local[ev.key]){ local[ev.key](); term.render(); ev.preventDefault(); return; }
+  if(ev.key==="F2"){   // Acey Ducey in die laufende BASIC-Sitzung tippen
+    ev.preventDefault();
+    if(!romTyping){ romTyping=true; (async()=>{ try{ for(const l of ACEYDUCEY_LINES) await typeBasicLine(l); } finally { romTyping=false; } })(); }
+    return;
+  }
   let code=null;
   if(ev.key==="Enter")code=0x0D;
   else if(ev.key==="Backspace")code=0x08;

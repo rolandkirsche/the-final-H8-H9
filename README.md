@@ -19,8 +19,9 @@ Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
 
 - Kurz nach dem Laden erscheint die Bootmeldung von Extended BASIC mit dem `*`-Prompt.
 - BASIC ergänzt Schlüsselwörter beim Tippen automatisch zur kürzesten eindeutigen Abkürzung
-  (`PR` wird zu `PRINT `, `RU` zu `RUN `). Ein ausgeschriebenes `PRINT` erzeugt deshalb einen Fehler.
-  Das ist das Originalverhalten.
+  (`PR` wird zu `PRINT `, `RU` zu `RUN `, `LIS` zu `LIST `). Ein ausgeschriebenes `PRINT` erzeugt deshalb
+  einen Fehler. Das ist das Originalverhalten. Die Abkürzung muss eindeutig sein: `LI` reicht für `LIST`
+  nicht, erst `LIS` wird erkannt.
 - Lokale H9-Bildschirmtasten (wirken nur auf den Schirm, nichts geht zum H8):
 
 | Taste am PC | H9-Funktion |

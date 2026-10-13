@@ -5,6 +5,11 @@ ein Foto des Terminals, in dessen Röhre ein lauffähiger H9-Emulator sitzt. Dah
 der H8 (Intel 8080A, 64 KB RAM, originales PAM-8-ROM) und bootet automatisch
 **Extended Benton Harbor BASIC** (Issue #10.02.01).
 
+![Heathkit H9 mit laufendem Extended Benton Harbor BASIC](screenshot.jpg)
+
+*Extended BASIC auf dem H9 (Safari auf dem Mac): ein kleines Programm hat den Schirm mit „H8 COMPUTER“ gefüllt,
+darunter die Meldung `END AT LINE 65535` und der `*`-Prompt.*
+
 Alles steckt in einer einzigen Datei: `index.html` (Foto, ROM und BASIC-Band sind eingebettet).
 Einfach im Browser öffnen, es braucht keinen Server.
 

@@ -33,7 +33,7 @@
 
   <div class="h8-row">
     <!-- ============ H8 ============ -->
-    <section class="machine" aria-label="Heathkit H8 Computer">
+    <section class="machine authentic-h8" aria-label="Heathkit H8 Computer">
       <div class="badge"><span class="brand">Heathkit</span><span class="model">H8 · Digital Computer</span></div>
       <div class="h8-panel">
         <div class="display-block">
@@ -57,88 +57,39 @@
         <svg viewBox="0 0 120 54" aria-hidden="true">
           <rect x="1" y="1" width="118" height="52" rx="5" class="shell"/>
           <rect x="10" y="7" width="100" height="20" rx="2" class="window"/>
-          <g transform="translate(34,17)">
-            <g class="reel">
-              <circle r="8" class="hub"/><circle r="2.6" class="hole"/>
-              <line x1="-8" y1="0" x2="8" y2="0" class="spoke"/>
-              <line x1="0" y1="-8" x2="0" y2="8" class="spoke"/>
-            </g>
-          </g>
-          <g transform="translate(86,17)">
-            <g class="reel">
-              <circle r="8" class="hub"/><circle r="2.6" class="hole"/>
-              <line x1="-8" y1="0" x2="8" y2="0" class="spoke"/>
-              <line x1="0" y1="-8" x2="0" y2="8" class="spoke"/>
-            </g>
-          </g>
+          <g transform="translate(34,17)"><g class="reel"><circle r="8" class="hub"/><circle r="2.6" class="hole"/><line x1="-8" y1="0" x2="8" y2="0" class="spoke"/><line x1="0" y1="-8" x2="0" y2="8" class="spoke"/></g></g>
+          <g transform="translate(86,17)"><g class="reel"><circle r="8" class="hub"/><circle r="2.6" class="hole"/><line x1="-8" y1="0" x2="8" y2="0" class="spoke"/><line x1="0" y1="-8" x2="0" y2="8" class="spoke"/></g></g>
           <rect x="15" y="31" width="90" height="11" rx="1" class="label-plate"/>
-          <rect x="10" y="45" width="14" height="5" class="screwpad"/>
-          <rect x="96" y="45" width="14" height="5" class="screwpad"/>
+          <rect x="10" y="45" width="14" height="5" class="screwpad"/><rect x="96" y="45" width="14" height="5" class="screwpad"/>
         </svg>
       </div>
       <div class="deck-label" id="tapeLabel">— kein Band eingelegt —</div>
       <div class="deck-counter" id="tapeCounter">— / —</div>
       <div class="deck-controls">
-        <select id="tapeSelect" aria-label="Kassette auswählen">
-          <option value="">— kein Band —</option>
-          <option value="blank">Leeres Band (DUMP)</option>
-          <option value="basic">Benton Harbor BASIC</option>
-        </select>
-        <div class="deck-buttons">
-          <button id="btnRewind" disabled title="Zurückspulen">Rücklauf</button>
-          <button id="btnEject" disabled title="Kassette auswerfen">Auswurf</button>
-        </div>
-        <div class="deck-buttons">
-          <button id="btnTapeLoadFile" title="Eigene Banddatei laden">Datei laden …</button>
-          <button id="btnTapeSave" disabled title="Band als Datei speichern">Speichern …</button>
-        </div>
+        <select id="tapeSelect" aria-label="Kassette auswählen"><option value="">— kein Band —</option><option value="blank">Leeres Band (DUMP)</option><option value="basic">Benton Harbor BASIC</option></select>
+        <div class="deck-buttons"><button id="btnRewind" disabled title="Zurückspulen">Rücklauf</button><button id="btnEject" disabled title="Kassette auswerfen">Auswurf</button></div>
+        <div class="deck-buttons"><button id="btnTapeLoadFile" title="Eigene Banddatei laden">Datei laden …</button><button id="btnTapeSave" disabled title="Band als Datei speichern">Speichern …</button></div>
         <input type="file" id="tapeFile" accept=".h8t,.bin,.tap" hidden>
       </div>
-      <div class="deck-footer">
-        <label class="deck-wp">
-          <input type="checkbox" id="chkWriteProtect" disabled>
-          Schreibschutz
-        </label>
-        <span class="lamp" id="lampTape"><i></i>BAND</span>
-      </div>
+      <div class="deck-footer"><label class="deck-wp"><input type="checkbox" id="chkWriteProtect" disabled> Schreibschutz</label><span class="lamp" id="lampTape"><i></i>BAND</span></div>
     </section>
   </div>
 
-  <div class="cable" aria-hidden="true">
-    <svg viewBox="0 0 220 46"><path d="M30,0 C30,34 190,10 190,46"/></svg>
-  </div>
+  <div class="cable" aria-hidden="true"><svg viewBox="0 0 220 46"><path d="M30,0 C30,34 190,10 190,46"/></svg></div>
 
   <!-- ============ H9 ============ -->
   <section class="terminal-case" aria-label="Heathkit H9 Terminal">
     <div class="h9-stage" id="h9stage">
       <img alt="Heathkit H9 Video Terminal" width="1448" height="1086" decoding="async" src="@@PHOTO@@">
       <div id="h9mask"></div>
-      <div class="crt" id="crt" tabindex="0" aria-label="H9 Bildschirm, klicken und tippen">
-        <canvas id="h9canvas"></canvas>
-      </div>
+      <div class="crt" id="crt" tabindex="0" aria-label="H9 Bildschirm, klicken und tippen"><canvas id="h9canvas"></canvas></div>
       <button id="h9reset" type="button" tabindex="-1" title="RESET: Emulator neu starten" aria-label="RESET"></button>
     </div>
     <div class="crt-keys" aria-label="H9 Bildschirm-Funktionstasten">
-      <div class="grp">
-        <span class="grp-label">Cursor</span>
-        <div class="dpad">
-          <button class="up" id="btnCurUp" title="Cursor hoch">▲</button>
-          <button class="left" id="btnCurLeft" title="Cursor links">◀</button>
-          <button class="down" id="btnCurDown" title="Cursor runter">▼</button>
-          <button class="right" id="btnCurRight" title="Cursor rechts">▶</button>
-        </div>
-      </div>
-      <div class="grp">
-        <button id="btnHome" title="Cursor an den Anfang">HOME</button>
-        <button id="btnEraseEol" title="Ab Cursor bis Zeilenende löschen">EOL</button>
-        <button id="btnErasePage" title="Ab Cursor bis Bildschirmende löschen">PAGE</button>
-        <button id="btnErase" title="Ganzen Bildschirm löschen">ERASE</button>
-      </div>
+      <div class="grp"><span class="grp-label">Cursor</span><div class="dpad"><button class="up" id="btnCurUp" title="Cursor hoch">▲</button><button class="left" id="btnCurLeft" title="Cursor links">◀</button><button class="down" id="btnCurDown" title="Cursor runter">▼</button><button class="right" id="btnCurRight" title="Cursor rechts">▶</button></div></div>
+      <div class="grp"><button id="btnHome" title="Cursor an den Anfang">HOME</button><button id="btnEraseEol" title="Ab Cursor bis Zeilenende löschen">EOL</button><button id="btnErasePage" title="Ab Cursor bis Bildschirmende löschen">PAGE</button><button id="btnErase" title="Ganzen Bildschirm löschen">ERASE</button></div>
     </div>
-    <div class="terminal-legend">
-      <span><span class="brand">Heathkit</span> H9 · Video Terminal</span>
-      <span class="hint">80 × 24 · nur Großbuchstaben · Bildschirm anklicken zum Tippen</span>
-    </div>
+    <div class="terminal-legend"><span><span class="brand">Heathkit</span> H9 · Video Terminal</span><span class="hint">80 × 24 · nur Großbuchstaben · Bildschirm anklicken zum Tippen</span></div>
   </section>
 
   <div id="help">
@@ -149,20 +100,17 @@
     <p><kbd>GO (4)</kbd> startet ab PC — dafür vorher <kbd>REG</kbd>→<kbd>6</kbd>→<kbd>ALTER</kbd>→Startadresse (6 Ziffern)→<kbd>ALTER</kbd>, das bloße Anzeigen einer Adresse über MEM reicht nicht. <kbd>SI (7)</kbd> führt einen Einzelschritt aus. <kbd>Umschalt</kbd>-Klick auf <kbd>0</kbd> (bzw. Umschalt+0) löst RTM aus, <kbd>Strg</kbd>-Klick auf <kbd>0</kbd> (bzw. Strg+0) löst RESET aus.</p>
     <p>Die drei Demo-Knöpfe (Demoprogramm, Hello World, Zeilen-Umkehr) schreiben ihr Programm direkt in den RAM und setzen PC automatisch auf den Programmanfang — danach nur noch <kbd>GO</kbd> drücken.</p>
     <p>Konsole: echte H8-5 Serial I/O Card (Intel-8251-USART) an Port 372₈/373₈ — <kbd>Benton Harbor BASIC laden</kbd> legt das virtuelle Kassettenband ein und lädt über PAM-8s eingebauten LOAD-Befehl (Port 370₈/371₈). Die beiden eigenen Demos (Hello World, Zeilen-Umkehr) nutzen daneben weiterhin ein eigenes, einfacheres UART-Modell an Port 350₈/355₈.</p>
-    <p>H9-Bildschirmtasten (unter dem Terminal): <kbd>HOME</kbd> setzt den Cursor an den Anfang, die Pfeiltasten bewegen ihn, <kbd>EOL</kbd> löscht ab Cursor bis Zeilenende, <kbd>PAGE</kbd> ab Cursor bis Bildschirmende, <kbd>ERASE</kbd> löscht den ganzen Bildschirm. Das sind reine Bildschirmfunktionen direkt auf dem H9-Puffer — sie senden nichts an die H8-Seite und stören daher eine laufende BASIC-Sitzung nicht, wirken aber sofort auf das als Nächstes Angezeigte.</p>
+    <p>H9-Bildschirmtasten (unter dem Terminal): <kbd>HOME</kbd> setzt den Cursor an den Anfang, die Pfeiltasten bewegen ihn, <kbd>EOL</kbd> löscht ab Cursor bis Zeilenende, <kbd>PAGE</kbd> ab Cursor bis Bildschirmende, <kbd>ERASE</kbd> löscht den ganzen Bildschirm. Das sind reine Bildschirmfunktionen direkt auf den H9-Puffer — sie senden nichts an die H8-Seite und stören daher eine laufende BASIC-Sitzung nicht, wirken aber sofort auf das als Nächstes Angezeigte.</p>
     <p>Kassettendeck (rechts neben dem H8): über das Auswahlfeld ein Band einlegen (leer oder Benton Harbor BASIC) oder eine eigene Banddatei laden. <kbd>LOAD (8)</kbd> liest danach ganz normal über PAM-8s Kassettenroutine, <kbd>DUMP (9)</kbd> schreibt (Start-/Endadresse wie gewohnt am Panel eingeben) — beides läuft über den echten ROM-Code, die UI legt nur das Band ein. Schreibgeschützte Bänder (z.&nbsp;B. BASIC) lassen sich per Häkchen entsperren. „Rücklauf" setzt die Bandposition zurück auf Anfang, „Band speichern …" lädt das aktuelle Band als Datei herunter.</p>
-    <p><kbd>Acey Ducey laden</kbd> lädt bei Bedarf zuerst Benton Harbor BASIC und tippt danach das Original-BASIC-Spiel "Acey Ducey" (Creative Computing, 1978) automatisch Zeichen für Zeichen in die laufende Sitzung — genau wie ein echter Tastatureingang, inklusive der Auto-Abkürzung unten. Danach <kbd>RUN</kbd> eintippen zum Spielen.</p>
+    <p><kbd>Acey Ducey laden</kbd> lädt bei Bedarf zuerst Benton Harbor BASIC und tippt danach das Original-BASIC-Spiel „Acey Ducey" (Creative Computing, 1978) automatisch Zeichen für Zeichen in die laufende Sitzung — genau wie ein echter Tastatureingang, inklusive der Auto-Abkürzung unten. Danach <kbd>RUN</kbd> eintippen zum Spielen.</p>
     <p>BASIC-Eingabe: Schlüsselwörter werden beim Tippen automatisch zur kürzesten eindeutigen Abkürzung ergänzt (<kbd>PR</kbd> → <code>PRINT&nbsp;</code>, <kbd>RU</kbd> → <code>RUN&nbsp;</code>) — original 1977er-Verhalten zum Tastensparen. Wer ein Schlüsselwort trotzdem ganz ausschreibt, tippt nach der Auto-Ergänzung ungewollt weiter in ein neues Token hinein (z.&nbsp;B. wird aus <code>PRINT</code> so <code>PRINT INT(</code>). Abkürzungen verwenden oder das Wort direkt nach der Auto-Ergänzung stehen lassen.</p>
     <div class="src">Läuft mit dem originalen PAM-8-Monitor-ROM (Heath 444-13, J.G. Letwin, 1976) und dem originalen Benton-Harbor-BASIC-Kassettenband (Heath/Wintek, Issue 05.01.01, 1977, SEBHC-Software-Archiv) — kein Nachbau. Tastenmatrix, Frontpanel-Port-Protokoll (360₈/361₈), Zeichentabellen und das H8-5-Konsolprotokoll gegen die laufende Original-Firmware sowie den Quelltext „XCON8 ROM.asm" (T. Gulczynski Re-Creation, 2009) verifiziert, portiert aus dem Schwesterprojekt <code>virtual-h8-h9</code>. LOAD und DUMP sprechen beide dieselbe virtuelle Bandschnittstelle über Port 370₈/371₈ an; ohne eingelegtes Band wartet LOAD wie am Original (abbrechbar mit CANCEL) und DUMP schreibt ins Leere.</div>
   </div>
 
   <footer>
-    Echter Intel-8080A-Softwarekern mit 64&nbsp;KB RAM; der Bereich 000.000–001777 oktal ist als Original-PAM-8-ROM schreibgeschützt. Das H9 stellt hier 12 Zeilen à 80 Zeichen dar (Original) und zeigt nur Großbuchstaben; mit <code>?rows=24</code> in der Adresse läuft der historische 24-Zeilen-Ausbau.
+    Echter Intel-8080A-Softwarekern mit 64&nbsp;KB RAM; der Bereich 000.000–001777 oktal ist als Original-PAM-8-ROM schreibgeschützt.
   </footer>
 </div>
-
-<script>
-/*@js*/
-</script>
+<script>/*@js*/</script>
 </body>
 </html>

@@ -35,7 +35,7 @@ html.h9only{background:#b9b9b9}
 #h9reset{position:absolute;left:54.8%;top:67.5%;width:3.8%;height:3.6%;padding:0;border:0;border-radius:3px;background:transparent;cursor:pointer}
 #h9reset:active{background:rgba(255,255,255,.18)}
 body.cal #h9reset{outline:1px solid red}
-/* LINE links: unsichtbare Klickflaeche ueber der linken LINE-Taste; Foto bleibt unveraendert. */
+/* Die einzige LINE-Taste des originalen H9: zurueck zu H8. */
 #h9lineH8{position:absolute;left:58.7%;top:67.5%;width:3.8%;height:3.6%;padding:0;border:0;border-radius:3px;background:transparent;cursor:pointer}
 #h9lineH8:active{background:rgba(255,255,255,.18)}
 body.cal #h9lineH8{outline:1px solid red}

@@ -7,6 +7,8 @@
 /* Two-page presentation: H8 is page 1, H9 is page 2. */
 .terminal-case{display:none!important}
 body.page-h9 .h8-row{display:none!important}
-body.page-h9 .terminal-case{display:block!important}
+body.page-h9 .terminal-case{display:block!important;width:100vw;max-width:none;margin:0;padding:0;background:transparent;border:0;box-shadow:none;transform:none}
+body.page-h9 .terminal-case .terminal-screen,body.page-h9 .terminal-case .terminal-body,body.page-h9 .terminal-case .h9-stage{width:100%;max-width:none}
+body.page-h9 .terminal-case img{max-width:100%;height:auto}
 .page-nav{font-weight:600}.page-nav.active{box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
 body.page-h9 #help,body.page-h9 footer{display:none}

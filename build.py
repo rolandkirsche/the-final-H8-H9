@@ -29,7 +29,7 @@ def esbuild(code, loader):
     print("Hinweis: esbuild nicht verfügbar, %s bleibt unminifiziert" % loader, file=sys.stderr)
     return code
 
-css = esbuild(read("src/style.css"), "css")
+css = esbuild(read("src/style.css") + "\n" + read("src/h8-authentic.css"), "css")
 js = "\n".join(open(f, encoding="utf-8").read() for f in sorted(glob.glob(os.path.join(ROOT, "src/js/*.js"))))
 js = esbuild(js, "js")
 photo = "data:image/webp;base64," + base64.b64encode(open(os.path.join(ROOT, "assets/h9.webp"), "rb").read()).decode()

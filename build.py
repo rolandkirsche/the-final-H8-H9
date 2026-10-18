@@ -4,7 +4,7 @@
     python3 build.py            # minifiziert (esbuild, falls vorhanden; sonst unminifiziert)
     python3 build.py --dev      # lesbar, ohne Minifizierung
 
-Fotos (assets/h9.webp und assets/h8.png) werden als data:-URIs, CSS und JS
+Fotos (h9.webp und h8.png) werden als data:-URIs, CSS und JS
 (src/js/*.js in Dateinamen-Reihenfolge) werden inline eingebettet. Ergebnis:
 eine Datei, die per Doppelklick (file://) oder auf jedem statischen Webserver
 (z. B. GitHub Pages) läuft.
@@ -35,7 +35,7 @@ js = "\n".join(open(f, encoding="utf-8").read() for f in sorted(glob.glob(os.pat
 js = esbuild(js, "js")
 
 h9_photo = "data:image/webp;base64," + base64.b64encode(open(os.path.join(ROOT, "assets/h9.webp"), "rb").read()).decode()
-h8_photo = "data:image/png;base64," + base64.b64encode(open(os.path.join(ROOT, "assets/h8.png"), "rb").read()).decode()
+h8_photo = "data:image/png;base64," + base64.b64encode(open(os.path.join(ROOT, "h8.png"), "rb").read()).decode()
 
 css = css.replace("@@H8PHOTO@@", h8_photo)
 html = read("src/index.html")

@@ -21,3 +21,16 @@ document.getElementById("btnEraseEol").addEventListener("click",()=>crtKeyAction
 document.getElementById("btnErasePage").addEventListener("click",()=>crtKeyAction(()=>term.eraseToEOP()));
 document.getElementById("btnErase").addEventListener("click",()=>crtKeyAction(()=>term.eraseScreen()));
 
+/* LINE (links) auf dem authentischen Foto: zurück zur H8-Seite.
+   Die sichtbare Beschriftung des Fotos bleibt unverändert. */
+(function installH8ReturnKey(){
+  const stage = document.getElementById("h9stage");
+  if(!stage) return;
+  const key = document.createElement("button");
+  key.id = "h9lineH8";
+  key.type = "button";
+  key.title = "LINE: zurück zum H8";
+  key.setAttribute("aria-label","LINE: zurück zum H8");
+  key.addEventListener("click",()=>document.getElementById("btnPageH8")?.click());
+  stage.appendChild(key);
+})();

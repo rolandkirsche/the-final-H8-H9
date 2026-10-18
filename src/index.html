@@ -9,12 +9,14 @@
 <title>The final H8/H9 · authentisches H8 Frontpanel</title>
 <style>/*@css*/</style>
 </head>
-<body>
+<body class="page-h8">
 <noscript><p style="color:#e8e2d2;font:16px sans-serif;padding:2em">Dieser H8/H9-Emulator braucht JavaScript.</p></noscript>
 <div class="bench">
   <div class="toolbar">
     <h1>Heathkit H8 · H9 Emulator</h1>
     <div class="spacer"></div>
+    <button id="btnPageH8" class="page-nav active" type="button" onclick="document.body.classList.remove('page-h9');document.body.classList.add('page-h8');this.classList.add('active');document.getElementById('btnPageH9').classList.remove('active')">Seite 1 · H8</button>
+    <button id="btnPageH9" class="page-nav" type="button" onclick="document.body.classList.remove('page-h8');document.body.classList.add('page-h9');this.classList.add('active');document.getElementById('btnPageH8').classList.remove('active')">Seite 2 · H9</button>
     <button id="btnDemo">Demoprogramm laden</button>
     <button id="btnHello">Hello World laden</button>
     <button id="btnReverser">Zeilen-Umkehr laden</button>

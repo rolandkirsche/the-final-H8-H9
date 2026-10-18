@@ -182,7 +182,7 @@
   .h9-stage{
     --h9ph:#7dffd6;
     --scr-left:23.55%;--scr-top:12.2%;--scr-width:52%;--scr-height:46.4%;
-    position:relative;width:100%;max-width:900px;margin:0 auto;
+    position:relative;width:100%;max-width:none;margin:0 auto;
     aspect-ratio:1448/1086;background:#2b2f2d;border-radius:6px;overflow:hidden;
   }
   .h9-stage>img{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -239,12 +239,3 @@
     background:#25221d;border:1px solid #3a362f;border-radius:5px;
     font-size:13px;line-height:1.65;color:#c9c2b2;max-width:70ch;
   }
-  #help.open{display:block}
-  #help h2{font-size:12px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;color:#a89f8c}
-  #help p{margin-bottom:9px}
-  #help kbd{
-    font-family:ui-monospace,Menlo,monospace;font-size:11px;
-    background:#3a362f;border-radius:3px;padding:1px 5px;color:#e8e2d2;
-  }
-  #help .src{margin-top:12px;font-size:11px;color:#8a8374;border-top:1px solid #3a362f;padding-top:10px}
-  footer{margin-top:30px;font-size:11px;color:#6f6a5e;max-width:78ch;line-height:1.6}

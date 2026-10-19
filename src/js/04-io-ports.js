@@ -19,6 +19,7 @@ const rom = {
   digitSel:0, display:new Uint8Array(10).fill(0x7f), speakerOn:false,
   keyByte: ROM_NO_KEY, keyHoldTimer:null,
   runHandle:null, stepCounter:0,
+  siState:0,   // Einzelbefehl: 0 aus, 1 bereit (Rueckkehr ins Programm folgt), 2 Anwenderbefehl laeuft
   ionSeen:false, userSeen:false,
   usart:{mode:0,cmd:0,expectMode:true,rbr:0,rxReady:false,overrunErr:false,txEnabled:false,rxEnabled:false,dtr:false},
   tape:null, // {label,bytes[],pos,editable,lastActivity} eingelegtes virtuelles Band, sonst null

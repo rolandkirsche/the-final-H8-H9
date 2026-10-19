@@ -19,7 +19,7 @@ function romDoReset(){
   // der vorherigen Sitzung hängen bleibt (siehe virtual-h8-h9-Vorlage).
   mem.fill(0, 1024);
   rom.digitSel=0; rom.display.fill(0x7f); rom.speakerOn=false; rom.keyByte=ROM_NO_KEY;
-  rom.stepCounter=0; rom.ionSeen=false; rom.userSeen=false; rom.rxHostQueue.length=0;
+  rom.stepCounter=0; rom.ionSeen=false; rom.userSeen=false; rom.siState=0; rom.rxHostQueue.length=0;
   usartReset(rom.usart);
   rxQ.length=0;
   beepKind('long');

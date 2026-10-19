@@ -43,3 +43,30 @@ body.cal #h9lineH8{outline:1px solid red}
 .h9-stage .crt{position:absolute;left:var(--scr-left);top:var(--scr-top);width:var(--scr-width);height:var(--scr-height);padding:0;border:0;background:none;border-radius:0;overflow:visible;cursor:text}
 .h9-stage .crt:focus-visible{box-shadow:none;outline:1px solid rgba(179,58,43,.35)}
 #h9canvas{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 2px var(--h9ph)) drop-shadow(0 0 7px rgba(80,255,190,.55))}
+
+/* Live H8 display: the photo's digit windows and lamps are blanked in h8.png; the emulator's
+   9 digits and 4 lamps are drawn on top at positions measured in photo px (1670x942). */
+.machine.authentic-h8 .display-block{display:block;position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;background:none;border:0;box-shadow:none;z-index:2;pointer-events:none}
+.machine.authentic-h8 .display-legend,.machine.authentic-h8 .panel-note{display:none}
+.machine.authentic-h8 .led-window{position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;background:none;border:0;box-shadow:none;display:block;overflow:visible}
+.machine.authentic-h8 .digit,.machine.authentic-h8 .digit.gap{position:absolute;margin:0;top:43.312%;width:2.994%;height:7.856%;transform:skewX(-10deg);overflow:visible;filter:drop-shadow(0 0 2px rgba(255,50,30,.85)) drop-shadow(0 0 7px rgba(255,30,10,.45))}
+.machine.authentic-h8 .digit polygon,.machine.authentic-h8 .digit circle{fill:rgba(120,22,14,.28)}
+.machine.authentic-h8 .digit polygon.on,.machine.authentic-h8 .digit circle.on{fill:#ff4a30}
+.machine.authentic-h8 .digit:not(:has(.on)){filter:none}
+.machine.authentic-h8 .panel-lamps{position:absolute;left:0;top:0;width:100%;height:100%;margin:0;gap:0;display:block}
+.machine.authentic-h8 .panel-lamps::before{content:"";position:absolute;left:10.838%;top:41.72%;width:1.557%;height:2.76%;border-radius:50%;background:radial-gradient(circle,#fff 0 18%,#ffe0d4 28%,#ff6a4a 48%,#e0200f 66%,rgba(255,40,20,0) 100%)}
+.machine.authentic-h8 .panel-lamps .lamp{position:absolute;width:1.557%;height:2.76%;margin:0;gap:0;font-size:0;color:transparent;display:block}
+.machine.authentic-h8 .panel-lamps .lamp i{display:block;width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,#4a0e0a 0 38%,#3a0a07 55%,#2a0705 70%,rgba(40,5,3,0) 100%);box-shadow:none}
+.machine.authentic-h8 .panel-lamps .lamp.on i{background:radial-gradient(circle,#fff 0 18%,#ffe0d4 28%,#ff6a4a 48%,#e0200f 66%,rgba(255,40,20,0) 100%)}
+.machine.authentic-h8 .digit:nth-child(1){left:21.916%}
+.machine.authentic-h8 .digit:nth-child(2){left:26.168%}
+.machine.authentic-h8 .digit:nth-child(3){left:30.419%}
+.machine.authentic-h8 .digit:nth-child(4){left:34.671%}
+.machine.authentic-h8 .digit:nth-child(5){left:38.862%}
+.machine.authentic-h8 .digit:nth-child(6){left:43.114%}
+.machine.authentic-h8 .digit:nth-child(7){left:50.18%}
+.machine.authentic-h8 .digit:nth-child(8){left:53.832%}
+.machine.authentic-h8 .digit:nth-child(9){left:57.485%}
+.machine.authentic-h8 #lampIon{left:10.659%;top:45.117%}
+.machine.authentic-h8 #lampMon{left:10.659%;top:48.514%}
+.machine.authentic-h8 #lampRun{left:10.719%;top:51.911%}

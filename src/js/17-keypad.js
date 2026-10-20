@@ -51,7 +51,7 @@ window.addEventListener("mouseup",panelKeyUp);
 window.addEventListener("touchend",panelKeyUp);
 window.addEventListener("touchcancel",panelKeyUp);
 
-// Physische Tastatur: M/R/A/C/L/D + Ziffern 0-7 + +/-, Strg+0=Reset,
+// Physische Tastatur: M/R/A/C/L/D/G/S + Ziffern 0-7 + +/-, Strg+0=Reset,
 // Umschalt+0=RTM — wie am Original-Panel, aber nur solange die H9-
 // Konsole (crt) nicht gerade fokussiert ist (sonst geht die Eingabe
 // dorthin, wie schon vorher in dieser Datei).
@@ -74,8 +74,8 @@ document.addEventListener("keydown",ev=>{
   }
   if(hasModifier) return;
   const k=ev.key.toLowerCase();
-  const map={m:'MEM', r:'REG', a:'ALTER', c:'CANCEL', l:'LOAD', d:'DUMP'};
-  if(map[k]){ romPressKey(ROM_KEY_BYTE[map[k]]); ev.preventDefault(); return; }
+  const map={m:'MEM', r:'REG', a:'ALTER', c:'CANCEL', l:'LOAD', d:'DUMP', g:4, s:7};   // G = GO (Taste 4), S = SI (Taste 7)
+  if(map[k]!==undefined){ romPressKey(ROM_KEY_BYTE[map[k]]); ev.preventDefault(); return; }
   if(ev.key==='+'||ev.key==='='){ romPressKey(ROM_KEY_BYTE.PLUS); ev.preventDefault(); return; }
   if(ev.key==='-'){ romPressKey(ROM_KEY_BYTE.MINUS); ev.preventDefault(); return; }
 });
@@ -85,6 +85,6 @@ document.addEventListener("keyup",ev=>{
   const digit = digitFromEvent(ev);
   if(digit!==null && digit<=7){ romReleaseKey(); return; }
   const k=ev.key.toLowerCase();
-  if('mracld+=-'.includes(k)) romReleaseKey();
+  if('mracldgs+=-'.includes(k)) romReleaseKey();
 });
 

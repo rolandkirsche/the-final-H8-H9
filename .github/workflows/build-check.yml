@@ -3,6 +3,9 @@ name: Build-Check
 # Prüft, ob die committete index.html zu src/ passt.
 on:
   push:
+    # Auf diesem Branch baut der Workflow "Build generated site" die index.html selbst nach.
+    branches-ignore:
+      - h8-authentic-frontpanel
   pull_request:
 
 jobs:

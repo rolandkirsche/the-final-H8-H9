@@ -162,3 +162,44 @@ async function loadReverser(){
   }
 }
 
+
+/* ============================================================
+   Initial Test Routine (Operation Manual 595-2014, Seiten 4-8):
+   92 Bytes ab 040.100, wie im Handbuch ueber die Frontplatte eingetippt
+   (MEM, Adresse, ALTER, Bytes), danach PC auf 040.100. GO (4) startet.
+   Die Anzeige laeuft durch "your H8 / is up and / running".
+   ============================================================ */
+const INITIAL_TEST = [
+    "076 002 062 010 040 006 004 041 170 040 021 013 040 016 011 176",
+    "022 043 023 015 302 117 040 016 003 076 377 315 053 000 015 302",
+    "131 040 005 302 112 040 076 062 315 140 002 076 062 315 053 000",
+    "076 062 315 140 002 303 105 040 377 262 270 272 275 377 222 200",
+    "377 237 244 377 272 230 377 220 326 302 377 275 272 271 271 373",
+    "271 240 377 236 376 362 236 376 362 236 376 362"
+  ].join(" ").split(" ");
+async function loadInitialTest(){
+  if(romTyping) return;
+  romTyping=true; setLoadButtonsDisabled(true);
+  try{
+    const btn=document.getElementById("btnTest"), label=btn.textContent;
+    const H=60, G=40;
+    const key=(k)=>romPressAndRelease(ROM_KEY_BYTE[k],H,G);
+    romDoReset();
+    await delay(900); bootSettled=true;
+    await key("MEM");
+    await romTypeDigits("040100".split("").map(Number),H,G);
+    await key("ALTER");
+    let n=0;
+    for(const b of INITIAL_TEST){
+      btn.textContent="Testprogramm "+(++n)+"/"+INITIAL_TEST.length;
+      await romTypeDigits(b.split("").map(Number),H,G);
+    }
+    btn.textContent=label;
+    await key("ALTER");
+    await romSetPC(0x2040);
+    say("Initial Test Routine nach <b>040.100</b> eingegeben ("+INITIAL_TEST.length+" Bytes), PC gesetzt — jetzt <b>GO (4)</b> druecken. Stoppen: <b>0</b> und <b>MEM (#)</b> gleichzeitig.");
+  } finally {
+    document.getElementById("btnTest").textContent="Testprogramm";
+    romTyping=false; setLoadButtonsDisabled(false);
+  }
+}

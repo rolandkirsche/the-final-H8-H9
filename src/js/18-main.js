@@ -8,9 +8,7 @@ document.getElementById("btnBasic").addEventListener("click",(e)=>loadBasic(e.cu
 document.getElementById("btnExBasic").addEventListener("click",(e)=>loadExBasic(e.currentTarget));
 document.getElementById("btnAceyDucey").addEventListener("click",(e)=>loadAceyDucey(e.currentTarget));
 document.getElementById("btnReset").addEventListener("click",romDoReset);
-document.getElementById("btnHelp").addEventListener("click",()=>{
-  document.getElementById("help").classList.toggle("open");
-});
+document.getElementById("btnTest").addEventListener("click",loadInitialTest);
 
 // RESET-Taste: H8 weich zuruecksetzen (CPU, RAM, USART), Schirm loeschen, Extended BASIC neu booten.
 // Laeuft gerade noch der erste Bootvorgang, wird stattdessen die Seite neu geladen (sauberster Neustart).

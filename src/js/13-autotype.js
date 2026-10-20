@@ -31,7 +31,7 @@ async function romSetPC(addr){
 }
 
 let romTyping = false;
-const LOAD_BUTTON_IDS = ['btnDemo','btnHello','btnReverser','btnBasic','btnExBasic','btnAceyDucey'];
+const LOAD_BUTTON_IDS = ['btnDemo','btnHello','btnReverser','btnBasic','btnExBasic','btnAceyDucey','btnTest'];
 function setLoadButtonsDisabled(disabled){
   for(const id of LOAD_BUTTON_IDS){
     const b = document.getElementById(id);

@@ -5,7 +5,7 @@
 const SEG={
   "0":"abcdef","1":"bc","2":"abdeg","3":"abcdg","4":"bcfg","5":"acdfg","6":"acdefg","7":"abc","8":"abcdefg",
   "A":"abcefg","b":"cdefg","C":"adef","c":"deg","d":"bcdeg","E":"adefg","H":"bcefg","L":"def","P":"abefg",
-  "S":"acdfg","F":"aefg","o":"abfg","u":"bfg","r":"afg","I":"ef","n":"abf","N":"ceg","i":"b","g":"abcdfg",
+  "S":"acdfg","F":"aefg","o":"abfg","u":"bfg","r":"af","I":"ef","n":"abf","N":"ceg","i":"b","g":"abcdfg",
   "[":"efg","-":"g","]":"bcg"," ":""
 };
 const SEGPTS={

@@ -104,7 +104,21 @@ function usartReceive(byte){
 }
 
 function romIoIn(port){
-  if(port===0xF0) return rom.keyByte;
+  if(port===0xF0){
+    // RTM (Code 056 oktal) gilt nur fuer die Abfrage im Uhr-Interrupt bei 000313 oktal (IN 360,
+    // danach steht PC auf 000315). Die Tastenroutine des Monitors (001660) wuerde den noch
+    // gehaltenen Code als Ziffer 8 (= LOAD) lesen und auf die Kassette warten. Deshalb wird RTM
+    // dort verbraucht und sonst als "keine Taste" gelesen.
+    if(rom.keyByte===ROM_RTM_BYTE){
+      if(rom.cpu && rom.cpu.pc===0o315){
+        if(rom.keyHoldTimer){ clearTimeout(rom.keyHoldTimer); rom.keyHoldTimer=null; }
+        rom.keyByte = ROM_NO_KEY;
+        return ROM_RTM_BYTE;
+      }
+      return ROM_NO_KEY;
+    }
+    return rom.keyByte;
+  }
   if(port===CONSOLE_BASE || port===CONSOLE_BASE+1) return usartIn(port);
   if(port===CASSETTE_BASE || port===CASSETTE_BASE+1) return cassetteIn(port);
   if(port===UART_DATA || port===UART_LSR) return oldUartIn(port);

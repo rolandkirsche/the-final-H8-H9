@@ -72,14 +72,20 @@ const term={
         const x0=c*cw+(cw-5*p)/2, y0=r*ch+yo;
         for(let gc=0;gc<5;gc++){
           const bits=g[gc]; if(!bits) continue;
+          // Punkte auf ganze Geraetepixel legen: keine halbtransparenten Kanten
+          const xa=Math.round(x0+gc*p), xb=Math.max(xa+1,Math.round(x0+gc*p+p*1.1));
           for(let gr=0;gr<7;gr++){
-            if(bits&(1<<gr)) h9Ctx.fillRect(x0+gc*p,y0+gr*rp,p*1.1,rp*0.7);
+            if(bits&(1<<gr)){
+              const ya=Math.round(y0+gr*rp), yb=Math.max(ya+1,Math.round(y0+gr*rp+rp*0.7));
+              h9Ctx.fillRect(xa,ya,xb-xa,yb-ya);
+            }
           }
         }
       }
     }
     if(Math.floor(Date.now()/450)%2===0){
-      h9Ctx.fillRect(this.col*cw+(cw-5.4*p)/2,this.row*ch+yo,p*5.4,gh);   // Blockcursor
+      const cx=Math.round(this.col*cw+(cw-5.4*p)/2), cy=Math.round(this.row*ch+yo);
+      h9Ctx.fillRect(cx,cy,Math.round(p*5.4),Math.round(gh));   // Blockcursor
     }
   }
 };

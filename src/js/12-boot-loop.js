@@ -11,7 +11,7 @@ function bootROM(){
   rom.digitSel=0; rom.display.fill(0x7f); rom.speakerOn=false; rom.keyByte=ROM_NO_KEY;
   rom.stepCounter=0; rom.ionSeen=false; rom.userSeen=false; rom.siState=0; rom.tape=null;
   rom.pendingRxInterrupt=false; rom.rxHostQueue.length=0;
-  usartReset(rom.usart); termClear();
+  usartReset(rom.usart);
   const c = new CPU(mem, new Uint8Array(256));
   c.onIn = romIoIn; c.onOut = romIoOut;
   // Reales H8 blendet ROM (0-1777 oktal = 0-1023 dez.) bei Schreibzugriffen aus.

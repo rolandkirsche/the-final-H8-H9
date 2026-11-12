@@ -22,15 +22,6 @@ html:has(body.page-h9) .terminal-case{width:100vw;height:100vh;display:flex!impo
 html:has(body.page-h9) .h9-stage{width:min(100vw,calc(100vh * 1448 / 1086));height:min(100vh,calc(100vw * 1086 / 1448));max-width:none;margin:0;border-radius:0;aspect-ratio:1448/1086;background:#b9b9b9;overflow:hidden;flex:none}
 html:has(body.page-h9) .h9-stage>img{width:100%;height:100%;object-fit:fill;display:block}
 
-/* Existing H9-only presentation rules retained for compatibility. */
-html.h9only{background:#b9b9b9}
-.h9only body{padding:0;background:#b9b9b9;min-height:100vh;display:flex;align-items:center;justify-content:center}
-.h9only .bench{max-width:none;width:100%;margin:0}
-.h9only .toolbar,.h9only #status,.h9only .h8-row,.h9only .cable,.h9only .crt-keys,
-.h9only .terminal-legend,.h9only #help,.h9only footer{display:none}
-.h9only .terminal-case{background:none;border:0;box-shadow:none;padding:0;border-radius:0}
-.h9only .h9-stage{max-width:min(100vw,calc(100vh*1448/1086));border-radius:0}
-.h9only .h9-stage .crt:focus-visible{outline:none}
 /* RESET-Taste im Foto: unsichtbare Klickflaeche ueber der Taste (Lage in Prozent der Bildgroesse) */
 #h9reset{position:absolute;left:58.8%;top:67.5%;width:3.8%;height:3.6%;padding:0;border:0;border-radius:3px;background:transparent;cursor:pointer}
 #h9reset:active{background:rgba(255,255,255,.18)}
@@ -39,12 +30,17 @@ body.cal #h9reset{outline:1px solid red}
 #h9lineH8{position:absolute;left:62.7%;top:67.5%;width:3.8%;height:3.6%;padding:0;border:0;border-radius:3px;background:transparent;cursor:pointer}
 #h9lineH8:active{background:rgba(255,255,255,.18)}
 body.cal #h9lineH8{outline:1px solid red}
+/* Sichtbare Rücksprungtaste zum H8: nur auf der H9-Seite */
+#btnBackH8{display:none;position:fixed;top:12px;left:12px;z-index:20;padding:6px 12px;border:1px solid rgba(0,0,0,.25);border-radius:6px;
+  background:#2b2a27;color:#e8e2d2;font:600 13px/1.2 system-ui,sans-serif;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.35);opacity:.8}
+#btnBackH8:hover,#btnBackH8:focus-visible{opacity:1}
+body.page-h9 #btnBackH8{display:block}
 #h9mask{position:absolute;left:21.9%;top:8.8%;width:54.5%;height:54.2%;border-radius:4%/4%;background:#0b1a15;box-shadow:inset 0 0 60px #000}
 .h9-stage .crt{position:absolute;left:var(--scr-left);top:var(--scr-top);width:var(--scr-width);height:var(--scr-height);padding:0;border:0;background:none;border-radius:0;overflow:visible;cursor:text}
 .h9-stage .crt:focus-visible{box-shadow:none;outline:1px solid rgba(179,58,43,.35)}
 #h9canvas{position:absolute;inset:0;width:100%;height:100%;filter:drop-shadow(0 0 2px var(--h9ph)) drop-shadow(0 0 7px rgba(80,255,190,.55))}
 
-/* Live H8 display: the photo's digit windows and lamps are blanked in h8.png; the emulator's
+/* Live H8 display: the photo's digit windows and lamps are blanked in assets/h8.jpg; the emulator's
    9 digits and 4 lamps are drawn on top at positions measured in photo px (1670x942). */
 .machine.authentic-h8 .display-block{display:block;position:absolute;left:0;top:0;width:100%;height:100%;padding:0;margin:0;background:none;border:0;box-shadow:none;z-index:2;pointer-events:none}
 .machine.authentic-h8 .display-legend,.machine.authentic-h8 .panel-note{display:none}

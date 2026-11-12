@@ -23,16 +23,9 @@ h9resetBtn.addEventListener("click",async()=>{
     term.eraseScreen();
     await bootExtendedBasic();
   } finally { romTyping=false; }
-  if(H9ONLY) crt.focus();
+  crt.focus();   // die RESET-Taste sitzt im H9-Foto: danach direkt weitertippen
 });
 bootROM();
-if(H9ONLY){
-  // Nur das H9 ist sichtbar; der H8 bootet im Hintergrund Extended Benton Harbor BASIC
-  romTyping=true;
-  bootExtendedBasic().finally(()=>{ romTyping=false; });
-  crt.focus();
-} else {
 loadDemo();
 say("Bereit — echtes PAM-8-ROM aktiv. Demoprogramm liegt ab 040.100 im RAM, PC wird automatisch gesetzt — <b>GO (4)</b> startet es; Ausgabe erscheint auf dem H9.");
-}
 

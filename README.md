@@ -1,9 +1,13 @@
 # The final H8/H9
 
-Ein Heathkit H8 mit einem Heathkit H9 Video Terminal, komplett im Browser. Sichtbar ist nur das H9:
-ein Foto des Terminals, in dessen Röhre ein lauffähiger H9-Emulator sitzt. Dahinter läuft unsichtbar
-der H8 (Intel 8080A, 64 KB RAM, originales PAM-8-ROM) und bootet automatisch
-**Extended Benton Harbor BASIC** (Issue #10.02.01).
+Ein Heathkit H8 mit einem Heathkit H9 Video Terminal, komplett im Browser. Die Seite hat zwei Ansichten:
+
+- **Seite 1 · H8** (Startansicht): Foto des H8 mit lebendem Frontpanel (Siebensegmentanzeige, Lampen,
+  Tastenfeld), Kassettendeck und Knöpfen zum Laden von Demos, Benton Harbor BASIC und
+  **Extended Benton Harbor BASIC** (Issue #10.02.01). Dahinter arbeitet ein Intel 8080A mit 64 KB RAM
+  und dem originalen PAM-8-ROM.
+- **Seite 2 · H9**: Foto des Terminals, in dessen Röhre ein lauffähiger H9-Emulator sitzt. Hier erscheint
+  alles, was der H8 über die Konsole ausgibt.
 
 ![Heathkit H9 mit laufendem Extended Benton Harbor BASIC](screenshot.jpg)
 
@@ -12,14 +16,37 @@ darunter die Meldung `END AT LINE 65535` und der `*`-Prompt.*
 
 **Live ausprobieren:** [rolandkirsche.github.io/the-final-H8-H9](https://rolandkirsche.github.io/the-final-H8-H9/)
 
-Alles steckt in einer einzigen Datei: `index.html` (Foto, ROM und BASIC-Band sind eingebettet).
+Alles steckt in einer einzigen Datei: `index.html` (Fotos, ROM und BASIC-Bänder sind eingebettet).
 Einfach im Browser öffnen, es braucht keinen Server.
 
 ## Bedienung
 
-Es muss nichts angeklickt werden, die Tastatur hört auf die ganze Seite.
+Nach dem Laden steht der H8 im Monitor (PAM-8). Ein kleines Echo-Demoprogramm liegt schon ab 040.100 im RAM,
+**GO (4)** startet es.
 
-- Kurz nach dem Laden erscheint die Bootmeldung von Extended BASIC mit dem `*`-Prompt.
+### H8-Frontpanel (Seite 1)
+
+Die Tasten im Foto lassen sich anklicken und halten. Die PC-Tastatur wirkt auf das Panel, solange nicht der
+H9-Bildschirm den Fokus hat:
+
+| Taste am PC | H8-Taste |
+| --- | --- |
+| 0–7 | Ziffern (8 und 9 sind am H8 LOAD und DUMP) |
+| M / R / A / C | MEM / REG / ALTER / CANCEL |
+| L / D | LOAD / DUMP |
+| G / S | GO (4) / SI (7) |
+| + / - | + / − |
+| Umschalt+0 | RTM (zurück zum Monitor) |
+| Strg+0 bzw. Cmd+0 | RST/0 (Reset, RAM wird gelöscht) |
+
+Die Knöpfe oben laden Demos, Benton Harbor BASIC, Extended BASIC oder Acey Ducey. BASIC wird dabei wie am
+Original über PAM-8s LOAD-Befehl vom virtuellen Band gelesen.
+
+### H9-Terminal (Seite 2)
+
+Zum Tippen einmal in den Bildschirm klicken. Zurück zum H8 geht es mit der Taste **← H8** oben links
+oder mit einem Klick auf LINE im Foto.
+
 - BASIC ergänzt Schlüsselwörter beim Tippen automatisch zur kürzesten eindeutigen Abkürzung
   (`PR` wird zu `PRINT `, `RU` zu `RUN `, `LIS` zu `LIST `). Ein ausgeschriebenes `PRINT` erzeugt deshalb
   einen Fehler. Das ist das Originalverhalten. Die Abkürzung muss eindeutig sein: `LI` reicht für `LIST`
@@ -69,7 +96,7 @@ Zeichen selbst, einschließlich der automatischen Ergänzung von Schlüsselwört
 | --- | --- |
 | `index.html` | Original-H9: 12 Zeilen × 80 Zeichen |
 | `index.html?rows=24` | historischer Ausbau auf 24 × 80 |
-| `index.html?debug` | komplette H8-Oberfläche: Frontpanel, Kassettendeck, Demos, Standard-BASIC, Acey Ducey, Extended BASIC |
+| `index.html?cal` | zeigt die unsichtbare Klickfläche der RESET-Taste im H9-Foto rot umrandet (zum Ausrichten) |
 
 ## Das H9
 
@@ -93,14 +120,14 @@ Zeichen selbst, einschließlich der automatischen Ergänzung von Schlüsselwört
 
 ## Aufbau des Repos und Build
 
-`index.html` ist die fertige, minifizierte Einzeldatei (rund 220 KB, gzip rund 140 KB). Sie wird aus den Quellen gebaut:
+`index.html` ist die fertige, minifizierte Einzeldatei (rund 730 KB, davon rund 450 KB das H8-Foto). Sie wird aus den Quellen gebaut:
 
 | Pfad | Inhalt |
 | --- | --- |
 | `src/index.html` | HTML-Gerüst mit Meta-Tags, Favicon und den Platzhaltern für CSS, JS und Foto |
-| `src/style.css` | Layout, H9-Röhre, H8-Oberfläche für `?debug` |
-| `src/js/*.js` | Skript in 19 Modulen, in Dateinamen-Reihenfolge zusammengesetzt (CPU, ROM-Daten, I/O-Ports, H9-Terminal, Kassette, BASIC, Acey Ducey, Star Trek, …) |
-| `assets/h9.webp` | Foto des H9 (WebP, wird als `data:`-URI eingebettet) |
+| `src/style.css`, `src/h8-authentic.css` | Layout, H9-Röhre, H8-Frontpanel auf dem Foto |
+| `src/js/*.js` | Skript in 20 Modulen, in Dateinamen-Reihenfolge zusammengesetzt (CPU, ROM-Daten, I/O-Ports, H9-Terminal, Kassette, BASIC, Acey Ducey, Star Trek, …) |
+| `assets/h9.webp`, `assets/h8.jpg` | Fotos von H9 und H8 (werden als `data:`-URIs eingebettet) |
 | `build.py` | baut `index.html`; `python3 build.py --dev` lässt den Code lesbar |
 
 ```sh
@@ -109,9 +136,10 @@ python3 build.py --dev  # lesbare Variante zum Debuggen
 ```
 
 Die fertige Datei braucht keinen Server: Doppelklick (`file://`) genügt, ebenso jeder statische Webhost (z. B. GitHub Pages).
-Vor dem Commit bitte `python3 build.py` mit esbuild 0.28.2 laufen lassen, damit `index.html` zu `src/` passt.
-Eine GitHub Action (`.github/workflows/build-check.yml`) baut bei jedem Push und Pull Request neu und schlägt fehl,
-wenn die committete `index.html` davon abweicht.
+Lokal muss man nicht bauen: Bei jedem Push auf `main` baut die GitHub Action `.github/workflows/build-and-commit.yml`
+die `index.html` mit esbuild 0.28.2 neu und committet sie, falls sie sich geändert hat. Wer lokal testen will, nimmt
+`python3 build.py --dev` und setzt die `index.html` danach mit `git checkout index.html` zurück, sonst landet die
+unminifizierte Fassung im Commit.
 
 ## Herkunft
 

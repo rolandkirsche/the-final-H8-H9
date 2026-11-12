@@ -35,7 +35,7 @@ function updateCassetteUI(){
 function insertTape(label, bytes, editable){
   rom.tape = { label, bytes: Array.from(bytes), pos:0, editable, lastActivity:0 };
   updateCassetteUI();
-  say('Kassette eingelegt: <b>'+label+'</b> ('+rom.tape.bytes.length+' Bytes)'
+  say('Kassette eingelegt: <b>'+esc(label)+'</b> ('+rom.tape.bytes.length+' Bytes)'
     +(editable ? '' : ', schreibgeschützt')
     +' — <b>LOAD (8)</b> liest'+(editable ? ', <b>DUMP (9)</b> schreibt' : '')+'.');
 }
@@ -45,13 +45,13 @@ function ejectTape(){
   rom.tape = null;
   elTapeSelect.value = '';
   updateCassetteUI();
-  say('Kassette ausgeworfen (war: <b>'+had+'</b>).');
+  say('Kassette ausgeworfen (war: <b>'+esc(had)+'</b>).');
 }
 function rewindTape(){
   if(!rom.tape) return;
   rom.tape.pos = 0;
   updateCassetteUI();
-  say('Band zurückgespult: <b>'+rom.tape.label+'</b>.');
+  say('Band zurückgespult: <b>'+esc(rom.tape.label)+'</b>.');
 }
 function saveTapeToFile(){
   const t = rom.tape;
@@ -64,7 +64,7 @@ function saveTapeToFile(){
   a.click();
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 2000);
-  say('Band <b>'+t.label+'</b> als Datei gespeichert ('+t.bytes.length+' Bytes).');
+  say('Band <b>'+esc(t.label)+'</b> als Datei gespeichert ('+t.bytes.length+' Bytes).');
 }
 elTapeSelect.addEventListener('change', (e)=>{
   const v = e.target.value;

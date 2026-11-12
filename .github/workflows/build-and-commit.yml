@@ -1,13 +1,20 @@
 name: Build generated site
 
+# Baut index.html aus src/ und committet sie, wenn sie sich geändert hat.
+# Lokal muss deshalb niemand esbuild installieren; GitHub Pages zeigt danach die neue Fassung.
 on:
   push:
     branches:
       - main
-      - h8-authentic-frontpanel
+  workflow_dispatch:
 
 permissions:
   contents: write
+
+# Zwei schnell aufeinanderfolgende Pushes sollen sich beim Zurückschreiben nicht in die Quere kommen
+concurrency:
+  group: build-index
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -21,6 +28,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      # Version fest, damit die Minifizierung Byte für Byte reproduzierbar ist
       - run: npm install -g esbuild@0.28.2
       - run: python3 build.py
       - name: Commit generated index.html

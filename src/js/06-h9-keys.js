@@ -34,3 +34,15 @@ document.getElementById("btnErase").addEventListener("click",()=>crtKeyAction(()
   key.addEventListener("click",()=>document.getElementById("btnPageH8")?.click());
   stage.appendChild(key);
 })();
+
+/* Sichtbare Rücksprungtaste zum H8 (nur auf der H9-Seite eingeblendet, siehe h8-authentic.css). */
+(function installBackToH8Button(){
+  const btn = document.createElement("button");
+  btn.id = "btnBackH8";
+  btn.type = "button";
+  btn.textContent = "← H8";
+  btn.title = "Zurück zum H8";
+  btn.addEventListener("mousedown",ev=>ev.preventDefault());   // kein Fokus: Enter/Leertaste beim Tippen lösen nichts aus
+  btn.addEventListener("click",()=>document.getElementById("btnPageH8")?.click());
+  document.body.appendChild(btn);
+})();

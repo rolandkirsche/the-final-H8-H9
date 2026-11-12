@@ -62,7 +62,7 @@ function digitFromEvent(e){
   return (k>='0' && k<='9') ? parseInt(k,10) : null;
 }
 document.addEventListener("keydown",ev=>{
-  if(H9ONLY||document.activeElement===crt)return;
+  if(document.activeElement===crt)return;
   if(romTyping) return;
   const digit = digitFromEvent(ev);
   const hasModifier = ev.ctrlKey || ev.metaKey || ev.altKey;
@@ -80,7 +80,7 @@ document.addEventListener("keydown",ev=>{
   if(ev.key==='-'){ romPressKey(ROM_KEY_BYTE.MINUS); ev.preventDefault(); return; }
 });
 document.addEventListener("keyup",ev=>{
-  if(H9ONLY||document.activeElement===crt)return;
+  if(document.activeElement===crt)return;
   if(romTyping) return;
   const digit = digitFromEvent(ev);
   if(digit!==null && digit<=7){ romReleaseKey(); return; }

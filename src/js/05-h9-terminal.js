@@ -5,7 +5,6 @@
    ============================================================ */
 // Zeilenzahl: Original-H9 = 12 Zeilen; historischer Ausbau 24 Zeilen mit ?rows=24
 const H9_ROWS = new URLSearchParams(location.search).get("rows")==="24" ? 24 : 12;
-const H9ONLY = document.documentElement.classList.contains("h9only");
 // Zeichensatz 5x7 (Spaltenbytes, Bit0 = oberste Punktzeile), ASCII 0x20-0x5F — das H9 hat kein ROM,
 // der Zeichensatz steckt hier im Code. Ein Zeichen ist ein Punktmuster, kein Schriftbild.
 const H9_FONT = ('0000000000 00005F0000 0007000700 147F147F14 242A7F2A12 2313086462 3649552250 0005030000 ' +
@@ -89,12 +88,12 @@ const term={
     }
   }
 };
-function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+// Für say(): Text, der von außen kommt (z. B. Dateinamen), nicht als HTML auswerten
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 setInterval(()=>term.render(),120);
 document.querySelector(".terminal-legend .hint").textContent="80 × "+H9_ROWS+" · nur Großbuchstaben · Bildschirm anklicken zum Tippen";
 
 function termWrite(byte){ term.put(byte & 0x7F); }
-function termClear(){ /* keine Out-of-Band-Clear-Leitung, no-op */ }
 
 const crt=document.getElementById("crt");
 function h9Key(ev){
@@ -118,8 +117,8 @@ function h9Key(ev){
   if(ev.key==="Enter")code=0x0D;
   else if(ev.key==="Backspace")code=0x08;
   else if(ev.key.length===1)code=ev.key.toUpperCase().charCodeAt(0);
-  if(code!==null&&code<128){rxQ.push(code);queueHostByte(code);ev.preventDefault();}
+  // rxQ liest nur die Demo-UART (350/355); begrenzt, damit sie im BASIC-Betrieb nicht endlos wächst
+  if(code!==null&&code<128){if(rxQ.length<256)rxQ.push(code);queueHostByte(code);ev.preventDefault();}
 }
-(H9ONLY?document:crt).addEventListener("keydown",h9Key);
-if(H9ONLY){ document.addEventListener("click",()=>crt.focus()); }
+crt.addEventListener("keydown",h9Key);
 

@@ -3,6 +3,7 @@
 
     python3 build.py            # minifiziert (esbuild, falls vorhanden; sonst unminifiziert)
     python3 build.py --dev      # lesbar, ohne Minifizierung
+    python3 build.py --dev --out PFAD   # schreibt nach PFAD statt index.html (z. B. zum lokalen Ausprobieren)
 
 Fotos (assets/h9.webp und assets/h8.jpg) werden als data:-URIs, CSS und JS
 (src/js/*.js in Dateinamen-Reihenfolge) werden inline eingebettet. Ergebnis:
@@ -13,6 +14,7 @@ import base64, glob, os, re, shutil, subprocess, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 dev = "--dev" in sys.argv
+out = sys.argv[sys.argv.index("--out") + 1] if "--out" in sys.argv else os.path.join(ROOT, "index.html")
 unminified = []
 
 def read(p): return open(os.path.join(ROOT, p), encoding="utf-8").read()
@@ -43,6 +45,6 @@ html = html.replace("@@PHOTO@@", h9_photo)
 html = html.replace("/*@css*/", css.strip())
 html = html.replace("/*@js*/", js.strip().replace("</script", "<\\/script"))
 if not dev: html = re.sub(r"<!--(?!\[).*?-->", "", html, flags=re.S)
-open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8").write(html)
+open(out, "w", encoding="utf-8").write(html)
 mode = "dev" if dev else "minifiziert" if not unminified else "unminifiziert" if len(unminified) == 2 else "%s unminifiziert" % unminified[0]
-print("index.html: %d Bytes (%s)" % (len(html.encode()), mode))
+print("%s: %d Bytes (%s)" % (os.path.basename(out), len(html.encode()), mode))
